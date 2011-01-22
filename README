@@ -1,0 +1,20 @@
+Mount one file to another (with offset and append_only support) 
+
+Examples:
+
+# Simplest mode
+echo qqq > source
+touch mountpoint
+fusefile source mountpoint
+
+# 1KB random file (frandom is a fast urandom)
+fusefile /dev/frandom mountpoint -r -S 1024 -M 0100666
+
+# Instead of "losetup -r -o"
+fusefile /dev/sda sda1_readonly -r -S 1024 -O $((63*512)) -S $((626535*512)) -M 0100600
+
+# Append-only public log using FUSE
+fusefile /var/log/mylog publiclog -a -M 0100777 -o allow_other
+
+# Force a file to be "regular"
+fusefile /dev/uba1 mountpoint -w -M 0100600 -S `blockdev --getsize64 /dev/uba1`
