@@ -1,7 +1,9 @@
-all:
+all: fusefile
+
+fusefile:
 	gcc `pkg-config fuse --cflags --libs` fusefile.c -o fusefile -g3
 
-prefix=/usr
+prefix=/usr/local
 
 install:
 	install fusefile ${prefix}/bin/	
@@ -31,4 +33,22 @@ test:
 	dd if=m of=/dev/null skip=2047 bs=1M count=2
 	fusermount -u m
 	rm -Rf m qqq
+
+VERSION: .git
+	git describe --dirty > VERSION || echo unknown > VERSION
+
+.PHONY: test deb
+
+deb: fusefile VERSION control
+	rm -Rf deb
+	mkdir -p deb/usr/bin/
+	mkdir -p deb/DEBIAN
+	cp control deb/DEBIAN/control
+	echo Version: `cat VERSION` >> deb/DEBIAN/control
+	touch deb/DEBIAN/conffiles
+	cp fusefile deb/usr/bin/
+	strip deb/usr/bin/fusefile
+	fakeroot dpkg-deb -b deb fusefile-`cat VERSION`.deb
+	rm -Rf deb
+
 
