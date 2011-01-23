@@ -1,7 +1,7 @@
 all: fusefile
 
-fusefile:
-	gcc `pkg-config fuse --cflags --libs` fusefile.c -o fusefile -g3
+fusefile: fusefile.c Makefile
+	gcc -Wall `pkg-config fuse --cflags --libs` fusefile.c -o fusefile -g3
 
 prefix=/usr/local
 

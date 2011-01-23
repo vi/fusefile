@@ -24,7 +24,11 @@
 
 #define FUSE_USE_VERSION 26
 #define _XOPEN_SOURCE 500
+#define _FILE_OFFSET_BITS 64 
+#define _LARGEFILE64_SOURCE
 
+#include <sys/types.h>
+#include <unistd.h>
 #include <fuse.h>
 #include <time.h>
 #include <stdlib.h>
@@ -211,10 +215,6 @@ int main(int argc, char *argv[])
     char* argv2[argc-1+2];  // File name removed, "-o nonempty,direct_io" added
     int our_arguments_count=3; /* argv[0], source file and mount point */
 
-    char* source_file;
-    char* mountpoint_file;
-
-    
     st_size=-1;
     st_mode=-1;
     st_offset=0;
