@@ -18,3 +18,4 @@ fusefile /var/log/mylog publiclog -a -M 0100777 -o allow_other
 
 # Force a file to be "regular"
 fusefile /dev/uba1 mountpoint -w -M 0100600 -S `blockdev --getsize64 /dev/uba1`
+# Note: for this purpose there is also  special FUSE filesystem: https://github.com/vasi/diskfile
