@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
     for(;argv[our_arguments_count];) {
 	if(!strcmp(argv[our_arguments_count], "-O")) {
 	    ++our_arguments_count;
-	    sscanf(argv[our_arguments_count], "%lli", &st_offset);
+	    sscanf(argv[our_arguments_count], "%ji", &st_offset);
 	    ++our_arguments_count;
 	} else
 	if(!strcmp(argv[our_arguments_count], "-M")) {
@@ -255,7 +255,7 @@ int main(int argc, char *argv[])
 		return 1;
 	    }
 	    ++our_arguments_count;
-	    sscanf(argv[our_arguments_count], "%lli", &st_size);
+	    sscanf(argv[our_arguments_count], "%ji", &st_size);
 	    ++our_arguments_count;
 	} else {
 	    break;
